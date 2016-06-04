@@ -181,7 +181,7 @@ public class PickBigImagesActivity extends Activity implements ViewPager.OnPageC
 
             AlbumBitmapCacheHelper.getInstance().addPathToShowlist(getPathFromList(position));
             zoomImageView.setTag(getPathFromList(position));
-            Bitmap bitmap = AlbumBitmapCacheHelper.getInstance().getBitmap(getPathFromList(position), 0, 0, new AlbumBitmapCacheHelper.ILoadImageCallback() {
+            Bitmap bitmap = AlbumBitmapCacheHelper.getInstance().getBitmap(this, getPathFromList(position), 0, 0, new AlbumBitmapCacheHelper.ILoadImageCallback() {
                 @Override
                 public void onLoadImageCallBack(Bitmap bitmap, String path, Object... objects) {
                     ZoomImageView view = ((ZoomImageView)viewPager.findViewWithTag(path));

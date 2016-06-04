@@ -100,7 +100,7 @@ public class AlbumBitmapCacheHelper {
         if (bitmap != null) {
             Log.e("zhao", "get bitmap from cache");
         } else {
-            decodeBitmapFromPath(path, width, height, callback, objects);
+            decodeBitmapFromPath(activity, path, width, height, callback, objects);
         }
         return bitmap;
     }
