@@ -38,6 +38,7 @@
     <!-- source code -->
     <source-file src="src/android/Album.java" target-dir="src/cc/cosdy/album" />
     <source-file src="src/android/FakeR.java" target-dir="src/cc/cosdy/album" />
+    <source-file src="src/android/AppContext.java" target-dir="src/cc/cosdy/album" />
     <source-file src="src/android/AlbumBitmapCacheHelper.java" target-dir="src/cc/cosdy/album" />
     <source-file src="src/android/CommonUtil.java" target-dir="src/cc/cosdy/album" />
     <source-file src="src/android/ZoomImageView.java" target-dir="src/cc/cosdy/album" /> 
