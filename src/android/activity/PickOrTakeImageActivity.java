@@ -220,8 +220,8 @@ public class PickOrTakeImageActivity extends Activity implements View.OnClickLis
     protected void initData() {
         inflater = LayoutInflater.from(this);
 
-        allImages = new ArrayList<SingleImageModel>();
-        imageDirectories = new ArrayList<SingleImageDirectories>();
+        allImages = new ArrayList<>();
+        imageDirectories = new ArrayList<>();
 
         handler = new MyHandler(this);
         //默认显示全部图片
