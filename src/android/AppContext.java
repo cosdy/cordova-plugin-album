@@ -14,7 +14,7 @@ public class AppContext {
 		context = activity.getApplicationContext();
 	}
 
-	public static AppContext getInstance(){
+	public static Context getInstance(){
     return context;
   }
 }
