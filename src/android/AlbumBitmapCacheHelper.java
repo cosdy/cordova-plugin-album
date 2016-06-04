@@ -94,13 +94,13 @@ public class AlbumBitmapCacheHelper {
      * @param callback 加载bitmap成功回调
      * @param objects  用来直接返回标识
      */
-    public Bitmap getBitmap(Activity activity, final String path, int width, int height, final ILoadImageCallback callback, Object... objects){
+    public Bitmap getBitmap(Context appContext, final String path, int width, int height, final ILoadImageCallback callback, Object... objects){
         Bitmap bitmap = getBitmapFromCache(path, width, height);
         //如果能够从缓存中获取符合要求的图片，则直接回调
         if (bitmap != null) {
             Log.e("zhao", "get bitmap from cache");
         } else {
-            decodeBitmapFromPath(activity, path, width, height, callback, objects);
+            decodeBitmapFromPath(appContext, path, width, height, callback, objects);
         }
         return bitmap;
     }
@@ -110,7 +110,7 @@ public class AlbumBitmapCacheHelper {
     /**
      * 通过path获取图片bitmap
      */
-    private void decodeBitmapFromPath(Activity activity, final String path, final int width, final int height, final ILoadImageCallback callback, final Object... objects) throws OutOfMemoryError {
+    private void decodeBitmapFromPath(Context appContext, final String path, final int width, final int height, final ILoadImageCallback callback, final Object... objects) throws OutOfMemoryError {
         final Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -130,7 +130,7 @@ public class AlbumBitmapCacheHelper {
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = true;
                     BitmapFactory.decodeFile(path, options);
-                    options.inSampleSize = computeScale(options, ((WindowManager) (activity.getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth(), ((WindowManager) (activity.getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth());
+                    options.inSampleSize = computeScale(options, ((WindowManager) (appContext.getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth(), ((WindowManager) (appContext.getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth());
                     options.inJustDecodeBounds = false;
                     try {
                         bitmap = BitmapFactory.decodeFile(path, options);
