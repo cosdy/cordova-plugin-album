@@ -67,7 +67,7 @@ public class CommonUtil {
         if (isExistSDcard())
             path = Environment.getExternalStorageDirectory().getPath() + "/albumSelect";
         else
-            path = getFilesDir().getPath();
+            path = AppContext.getInstance().getFilesDir().getPath();
         if (!path.endsWith("/"))
             path = path + "/";
         return path;

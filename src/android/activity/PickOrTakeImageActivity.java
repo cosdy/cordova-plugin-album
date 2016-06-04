@@ -220,8 +220,8 @@ public class PickOrTakeImageActivity extends Activity implements View.OnClickLis
     protected void initData() {
         inflater = LayoutInflater.from(this);
 
-        allImages = new ArrayList<>();
-        imageDirectories = new ArrayList<>();
+        allImages = new ArrayList<SingleImageModel>();
+        imageDirectories = new ArrayList<SingleImageDirectories>();
 
         handler = new MyHandler(this);
         //默认显示全部图片
@@ -237,7 +237,7 @@ public class PickOrTakeImageActivity extends Activity implements View.OnClickLis
         tv_choose_image_directory.setOnClickListener(this);
         tv_preview.setOnClickListener(this);
         //计算每张图片应该显示的宽度
-        perWidth = (((WindowManager) (getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth() - CommonUtil.dip2px(this, 4))/3;
+        perWidth = (((WindowManager) (AppContext.getInstance().getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth() - CommonUtil.dip2px(this, 4))/3;
 
         picNums = getIntent().getIntExtra(EXTRA_NUMS, 9);
 

@@ -20,7 +20,7 @@ public class Album extends CordovaPlugin {
 	public boolean execute(String action, final JSONArray args, final CallbackContext callbackContext) throws JSONException {
 		this.callbackContext = callbackContext;
 		if (action.equals("getImages")) {
-			Intent intent = new Intent(cordova.getActivity().getApplicationContext(), PickOrTakeImageActivity.class);
+			Intent intent = new Intent(cordova.getActivity(), PickOrTakeImageActivity.class);
 			if (this.cordova != null) {
 				this.cordova.startActivityForResult((CordovaPlugin) this, intent, 0);
 			}

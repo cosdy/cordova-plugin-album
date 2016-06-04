@@ -20,11 +20,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author: zzp
- * @since: 2015-06-10
- * Description: 相册页加载图片，省内存，防止oom
+ * 相册页加载图片 省内存 防止 OOM
  */
 public class AlbumBitmapCacheHelper {
+
     //线程安全的单例模式
     private volatile static AlbumBitmapCacheHelper instance = null;
     private LruCache<String, Bitmap> cache;
@@ -32,7 +31,6 @@ public class AlbumBitmapCacheHelper {
      * 用来优化图片的展示效果，保存当前显示的图片path
      */
     private ArrayList<String> currentShowString;
-//    private ContentResolver cr;
 
     private AlbumBitmapCacheHelper() {
         //分配1/4的运行时内存给图片显示
@@ -41,13 +39,12 @@ public class AlbumBitmapCacheHelper {
         cache = new LruCache<String, Bitmap>(memory) {
             @Override
             protected int sizeOf(String key, Bitmap value) {
-                //获取每张bitmap大小
+                //获取每张 bitmap 大小
                 return value.getRowBytes() * value.getHeight() / 1024;
             }
         };
 
         currentShowString = new ArrayList<String>();
-//        cr = AppContext.getInstance().getContentResolver();
     }
 
     /**
@@ -67,7 +64,7 @@ public class AlbumBitmapCacheHelper {
     }
 
     /**
-     * 选择完毕，直接释放缓存所占的内存
+     * 选择完毕, 直接释放缓存所占的内存
      */
     public void clearCache() {
         cache.evictAll();
@@ -106,9 +103,7 @@ public class AlbumBitmapCacheHelper {
         return bitmap;
     }
 
-    //try another size to get better display
     ThreadPoolExecutor tpe = new ThreadPoolExecutor(2, 5, 10, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
-//    ExecutorService tpe = Executors.newFixedThreadPool(1);
 
     /**
      * 通过path获取图片bitmap
@@ -163,12 +158,7 @@ public class AlbumBitmapCacheHelper {
                         BitmapFactory.decodeFile(path, options);
                         options.inSampleSize = computeScale(options, width, height);
                         options.inJustDecodeBounds = false;
-                        //获取手机自带缩略图,速度依旧很慢，所以该方案放弃
-//                    if(objects.length != 0){
-//                        long start = System.currentTimeMillis();
-//                        bitmap = MediaStore.Images.Thumbnails.getThumbnail(cr, Long.parseLong(objects[0].toString()),
-//                                MediaStore.Video.Thumbnails.MINI_KIND, options);
-//                    }else{
+
                         try {
                             bitmap = BitmapFactory.decodeFile(path, options);
                         }catch (OutOfMemoryError error){
@@ -199,8 +189,7 @@ public class AlbumBitmapCacheHelper {
                                 e.printStackTrace();
                             }
                         }
-//                    }
-                    }else{
+                    } else {
                         //从temp目录加载出来的图片也要放入到cache中
                         if (bitmap != null && cache!=null) {
                             bitmap = centerSquareScaleBitmap(bitmap, ((bitmap.getWidth() > bitmap.getHeight()) ? bitmap.getHeight() : bitmap.getWidth()));
