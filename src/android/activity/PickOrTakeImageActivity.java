@@ -606,7 +606,7 @@ public class PickOrTakeImageActivity extends Activity implements View.OnClickLis
             }
             AlbumBitmapCacheHelper.getInstance().addPathToShowlist(path);
             holder.iv_content.setTag(path);
-            Bitmap bitmap = AlbumBitmapCacheHelper.getInstance().getBitmap(path, perWidth, perWidth, new AlbumBitmapCacheHelper.ILoadImageCallback() {
+            Bitmap bitmap = AlbumBitmapCacheHelper.getInstance().getBitmap(this, path, perWidth, perWidth, new AlbumBitmapCacheHelper.ILoadImageCallback() {
                 @Override
                 public void onLoadImageCallBack(Bitmap bitmap, String path1, Object... objects) {
                     if (bitmap == null) {
@@ -783,7 +783,7 @@ public class PickOrTakeImageActivity extends Activity implements View.OnClickLis
             }
             else
                 holder.iv_directory_pic.setTag(path);
-            Bitmap bitmap = AlbumBitmapCacheHelper.getInstance().getBitmap(path, 225, 225, new AlbumBitmapCacheHelper.ILoadImageCallback() {
+            Bitmap bitmap = AlbumBitmapCacheHelper.getInstance().getBitmap(this, path, 225, 225, new AlbumBitmapCacheHelper.ILoadImageCallback() {
                 @Override
                 public void onLoadImageCallBack(Bitmap bitmap, String path, Object... objects) {
                     if (bitmap == null) return;
