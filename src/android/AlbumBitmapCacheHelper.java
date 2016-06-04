@@ -19,13 +19,12 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import android.app.Activity;
-
 /**
- * 相册页加载图片 省内存 防止 OOM
+ * @author: zzp
+ * @since: 2015-06-10
+ * Description: 相册页加载图片，省内存，防止oom
  */
 public class AlbumBitmapCacheHelper {
-
     //线程安全的单例模式
     private volatile static AlbumBitmapCacheHelper instance = null;
     private LruCache<String, Bitmap> cache;
@@ -33,6 +32,7 @@ public class AlbumBitmapCacheHelper {
      * 用来优化图片的展示效果，保存当前显示的图片path
      */
     private ArrayList<String> currentShowString;
+//    private ContentResolver cr;
 
     private AlbumBitmapCacheHelper() {
         //分配1/4的运行时内存给图片显示
@@ -41,12 +41,13 @@ public class AlbumBitmapCacheHelper {
         cache = new LruCache<String, Bitmap>(memory) {
             @Override
             protected int sizeOf(String key, Bitmap value) {
-                //获取每张 bitmap 大小
+                //获取每张bitmap大小
                 return value.getRowBytes() * value.getHeight() / 1024;
             }
         };
 
         currentShowString = new ArrayList<String>();
+//        cr = AppContext.getInstance().getContentResolver();
     }
 
     /**
@@ -66,7 +67,7 @@ public class AlbumBitmapCacheHelper {
     }
 
     /**
-     * 选择完毕, 直接释放缓存所占的内存
+     * 选择完毕，直接释放缓存所占的内存
      */
     public void clearCache() {
         cache.evictAll();
@@ -94,23 +95,25 @@ public class AlbumBitmapCacheHelper {
      * @param callback 加载bitmap成功回调
      * @param objects  用来直接返回标识
      */
-    public Bitmap getBitmap(Context appContext, final String path, int width, int height, final ILoadImageCallback callback, Object... objects){
+    public Bitmap getBitmap(final String path, int width, int height, final ILoadImageCallback callback, Object... objects){
         Bitmap bitmap = getBitmapFromCache(path, width, height);
         //如果能够从缓存中获取符合要求的图片，则直接回调
         if (bitmap != null) {
             Log.e("zhao", "get bitmap from cache");
         } else {
-            decodeBitmapFromPath(appContext, path, width, height, callback, objects);
+            decodeBitmapFromPath(path, width, height, callback, objects);
         }
         return bitmap;
     }
 
+    //try another size to get better display
     ThreadPoolExecutor tpe = new ThreadPoolExecutor(2, 5, 10, TimeUnit.SECONDS, new LinkedBlockingQueue<Runnable>());
+//    ExecutorService tpe = Executors.newFixedThreadPool(1);
 
     /**
      * 通过path获取图片bitmap
      */
-    private void decodeBitmapFromPath(Context appContext, final String path, final int width, final int height, final ILoadImageCallback callback, final Object... objects) throws OutOfMemoryError {
+    private void decodeBitmapFromPath(final String path, final int width, final int height, final ILoadImageCallback callback, final Object... objects) throws OutOfMemoryError {
         final Handler handler = new Handler() {
             @Override
             public void handleMessage(Message msg) {
@@ -130,7 +133,7 @@ public class AlbumBitmapCacheHelper {
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = true;
                     BitmapFactory.decodeFile(path, options);
-                    options.inSampleSize = computeScale(options, ((WindowManager) (appContext.getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth(), ((WindowManager) (appContext.getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth());
+                    options.inSampleSize = computeScale(options, ((WindowManager) (AppContext.getInstance().getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth(), ((WindowManager) (AppContext.getInstance().getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth());
                     options.inJustDecodeBounds = false;
                     try {
                         bitmap = BitmapFactory.decodeFile(path, options);
@@ -160,7 +163,12 @@ public class AlbumBitmapCacheHelper {
                         BitmapFactory.decodeFile(path, options);
                         options.inSampleSize = computeScale(options, width, height);
                         options.inJustDecodeBounds = false;
-
+                        //获取手机自带缩略图,速度依旧很慢，所以该方案放弃
+//                    if(objects.length != 0){
+//                        long start = System.currentTimeMillis();
+//                        bitmap = MediaStore.Images.Thumbnails.getThumbnail(cr, Long.parseLong(objects[0].toString()),
+//                                MediaStore.Video.Thumbnails.MINI_KIND, options);
+//                    }else{
                         try {
                             bitmap = BitmapFactory.decodeFile(path, options);
                         }catch (OutOfMemoryError error){
@@ -191,7 +199,8 @@ public class AlbumBitmapCacheHelper {
                                 e.printStackTrace();
                             }
                         }
-                    } else {
+//                    }
+                    }else{
                         //从temp目录加载出来的图片也要放入到cache中
                         if (bitmap != null && cache!=null) {
                             bitmap = centerSquareScaleBitmap(bitmap, ((bitmap.getWidth() > bitmap.getHeight()) ? bitmap.getHeight() : bitmap.getWidth()));
