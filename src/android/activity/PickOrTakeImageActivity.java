@@ -117,10 +117,13 @@ public class PickOrTakeImageActivity extends Activity implements View.OnClickLis
     /** FakeR */
     private FakeR fakeR;
 
+    private Activity activity;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fakeR = new FakeR(this);
+        activity = this;
         setContentView(fakeR.getId("layout", "activity_pick_or_take_image_activity"));
         initView();
         initData();
@@ -606,7 +609,7 @@ public class PickOrTakeImageActivity extends Activity implements View.OnClickLis
             }
             AlbumBitmapCacheHelper.getInstance().addPathToShowlist(path);
             holder.iv_content.setTag(path);
-            Bitmap bitmap = AlbumBitmapCacheHelper.getInstance().getBitmap(this, path, perWidth, perWidth, new AlbumBitmapCacheHelper.ILoadImageCallback() {
+            Bitmap bitmap = AlbumBitmapCacheHelper.getInstance().getBitmap(activity, path, perWidth, perWidth, new AlbumBitmapCacheHelper.ILoadImageCallback() {
                 @Override
                 public void onLoadImageCallBack(Bitmap bitmap, String path1, Object... objects) {
                     if (bitmap == null) {
@@ -783,7 +786,7 @@ public class PickOrTakeImageActivity extends Activity implements View.OnClickLis
             }
             else
                 holder.iv_directory_pic.setTag(path);
-            Bitmap bitmap = AlbumBitmapCacheHelper.getInstance().getBitmap(this, path, 225, 225, new AlbumBitmapCacheHelper.ILoadImageCallback() {
+            Bitmap bitmap = AlbumBitmapCacheHelper.getInstance().getBitmap(activity, path, 225, 225, new AlbumBitmapCacheHelper.ILoadImageCallback() {
                 @Override
                 public void onLoadImageCallBack(Bitmap bitmap, String path, Object... objects) {
                     if (bitmap == null) return;
