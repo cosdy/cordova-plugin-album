@@ -128,7 +128,7 @@ public class AlbumBitmapCacheHelper {
                     BitmapFactory.Options options = new BitmapFactory.Options();
                     options.inJustDecodeBounds = true;
                     BitmapFactory.decodeFile(path, options);
-                    options.inSampleSize = computeScale(options, ((WindowManager) (cordova.getActivity().getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth(), ((WindowManager) (cordova.getActivity().getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth());
+                    options.inSampleSize = computeScale(options, ((WindowManager) (getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth(), ((WindowManager) (getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth());
                     options.inJustDecodeBounds = false;
                     try {
                         bitmap = BitmapFactory.decodeFile(path, options);

@@ -161,8 +161,8 @@ public class ZoomImageView extends ImageView {
      */
     public void setSourceImageBitmap(Bitmap bitmap, Activity activity) {
         sourceBitmap = bitmap;
-        int screenWidth = ((WindowManager) (cordova.getActivity().getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth();
-        int screenHeight = ((WindowManager) (cordova.getActivity().getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getHeight();
+        int screenWidth = ((WindowManager) (getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth();
+        int screenHeight = ((WindowManager) (getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getHeight();
         sourceBitmap = resizeImage(sourceBitmap, screenWidth, screenHeight);
         invalidate();
     }

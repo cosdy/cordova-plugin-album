@@ -237,7 +237,7 @@ public class PickOrTakeImageActivity extends Activity implements View.OnClickLis
         tv_choose_image_directory.setOnClickListener(this);
         tv_preview.setOnClickListener(this);
         //计算每张图片应该显示的宽度
-        perWidth = (((WindowManager) (cordova.getActivity().getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth() - CommonUtil.dip2px(this, 4))/3;
+        perWidth = (((WindowManager) (getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth() - CommonUtil.dip2px(this, 4))/3;
 
         picNums = getIntent().getIntExtra(EXTRA_NUMS, 9);
 
