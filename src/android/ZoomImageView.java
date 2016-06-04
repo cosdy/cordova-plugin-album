@@ -161,8 +161,8 @@ public class ZoomImageView extends ImageView {
      */
     public void setSourceImageBitmap(Bitmap bitmap, Activity activity) {
         sourceBitmap = bitmap;
-        int screenWidth = ((WindowManager) (getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth();
-        int screenHeight = ((WindowManager) (getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getHeight();
+        int screenWidth = ((WindowManager) (AppContext.getInstance().getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getWidth();
+        int screenHeight = ((WindowManager) (AppContext.getInstance().getSystemService(Context.WINDOW_SERVICE))).getDefaultDisplay().getHeight();
         sourceBitmap = resizeImage(sourceBitmap, screenWidth, screenHeight);
         invalidate();
     }
@@ -393,8 +393,8 @@ public class ZoomImageView extends ImageView {
         totalTranslateX = translateX;
         totalTranslateY = translateY;
         if (null != sourceBitmap) canvas.drawBitmap(sourceBitmap, matrix, null);
-//		else
-//			T.showShort(getContext(), "sourceBitmap ==null");
+//      else
+//          T.showShort(getContext(), "sourceBitmap ==null");
     }
 
     /**
