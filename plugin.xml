@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-album" version="1.0.0">
+  <name>Album</name>
+  <description>Cordova Platform Album Plugin</description>
+  <author>liqm</author>
+  <keywords>cordova,album,camera</keywords>
+  <license>Apache 2.0</license>
+  <js-module src="www/index.js" name="Album">
+    <clobbers target="cosdy.Album" />
+  </js-module>
+  <!-- android -->
+  <platform name="android">
+    <!-- entry -->
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="Album">
+        <param name="android-package" value="cc.cosdy.album.Album"/>
+      </feature>
+    </config-file>
+    
+    <!-- activity -->
+    <config-file target="AndroidManifest.xml" parent="/manifest/application">
+      <activity android:name="cc.cosdy.album.PickBigImagesActivity"/>
+      <activity android:name="cc.cosdy.album.PickOrTakeImageActivity">
+        <intent-filter>
+          <action android:name="android.intent.action.MAIN" />
+          <category android:name="android.intent.category.LAUNCHER" />
+         </intent-filter>
+      </activity>
+    </config-file>
+
+    <!-- permission -->
+    <config-file target="AndroidManifest.xml" parent="/*">
+      <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+      <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+      <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    </config-file>
+
+    <!-- source code -->
+    <source-file src="src/android/Album.java" target-dir="src/cc/cosdy/album" />
+    <source-file src="src/android/FakeR.java" target-dir="src/cc/cosdy/album" />
+    <source-file src="src/android/AlbumBitmapCacheHelper.java" target-dir="src/cc/cosdy/album" />
+    <source-file src="src/android/AppContext.java" target-dir="src/cc/cosdy/album" />
+    <source-file src="src/android/CommonUtil.java" target-dir="src/cc/cosdy/album" />
+    <source-file src="src/android/ZoomImageView.java" target-dir="src/cc/cosdy/album" /> 
+    <source-file src="src/android/activity/PickBigImagesActivity.java" target-dir="src/cc/cosdy/album" />
+    <source-file src="src/android/activity/PickOrTakeImageActivity.java" target-dir="src/cc/cosdy/album" />
+    <source-file src="src/android/model/ImageDirectoryModel.java" target-dir="src/cc/cosdy/album" />
+    <source-file src="src/android/model/SingleImageModel.java" target-dir="src/cc/cosdy/album" />
+    
+    <!-- res -->
+    <source-file src="src/android/res/drawable/choose_directory_bg.xml" target-dir="res/drawable"/>
+
+    <source-file src="src/android/res/drawable-xhdpi/directory_bg.9.png" target-dir="res/drawable-xhdpi"/>
+    <source-file src="src/android/res/drawable-xhdpi/ic_arrow_back.png" target-dir="res/drawable-xhdpi"/>
+    <source-file src="src/android/res/drawable-xhdpi/ic_arrow_check.png" target-dir="res/drawable-xhdpi"/>
+    <source-file src="src/android/res/drawable-xhdpi/ic_product_9.9.png" target-dir="res/drawable-xhdpi"/>
+    <source-file src="src/android/res/drawable-xhdpi/image_choose.png" target-dir="res/drawable-xhdpi"/>
+    <source-file src="src/android/res/drawable-xhdpi/image_not_chose.png" target-dir="res/drawable-xhdpi"/>
+    <source-file src="src/android/res/drawable-xhdpi/pull_up_arrow.9.png" target-dir="res/drawable-xhdpi"/>
+    <source-file src="src/android/res/drawable-xhdpi/take_pic.9.png" target-dir="res/drawable-xhdpi"/>
+
+    <source-file src="src/android/res/layout/activity_pick_big_images.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/layout/activity_pick_or_take_image_activity.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/layout/item_list_view_album_directory.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/layout/item_pick_up_image.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/layout/item_titlebar.xml" target-dir="res/layout"/>
+    <source-file src="src/android/res/layout/widget_zoom_iamge.xml" target-dir="res/layout"/>
+
+    <source-file src="src/android/res/mipmap-hdpi/ic_launcher.png" target-dir="res/mipmap-hdpi"/>
+    <source-file src="src/android/res/mipmap-mdpi/ic_launcher.png" target-dir="res/mipmap-mdpi"/>
+    <source-file src="src/android/res/mipmap-xhdpi/ic_launcher.png" target-dir="res/mipmap-xhdpi"/>
+    <source-file src="src/android/res/mipmap-xxhdpi/ic_launcher.png" target-dir="res/mipmap-xxhdpi"/>
+
+    <source-file src="src/android/res/values/colors.xml" target-dir="res/values"/>
+    <source-file src="src/android/res/values/strings.xml" target-dir="res/values"/>
+    <source-file src="src/android/res/values/styles.xml" target-dir="res/values"/>
+  </platform>
+</plugin>
