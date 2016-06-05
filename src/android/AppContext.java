@@ -1,20 +1,20 @@
 package cc.cosdy.album;
 
-import android.app.Application;
+import android.app.Activity;
+import android.content.Context;
 
 /**
- * xxx
+ * 
  */
-public class AppContext extends Application {
-    private static AppContext instance;
+public class AppContext {
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        instance = this;
-    }
+	private static Context context;
 
-    public static AppContext getInstance(){
-        return instance;
-    }
+	public static void init(Activity activity) {
+		context = activity.getApplicationContext();
+	}
+
+	public static Context getInstance(){
+    return context;
+  }
 }

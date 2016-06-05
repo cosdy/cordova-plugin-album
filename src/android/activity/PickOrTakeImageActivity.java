@@ -121,6 +121,7 @@ public class PickOrTakeImageActivity extends Activity implements View.OnClickLis
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fakeR = new FakeR(this);
+        AppContext.init(this);
         setContentView(fakeR.getId("layout", "activity_pick_or_take_image_activity"));
         initView();
         initData();
